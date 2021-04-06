@@ -1,4 +1,4 @@
-import br.com.firstsoft.historiconotificacoes.buildSrc.Libs
+import app.wishlisted.android.buildSrc.Libs
 
 plugins {
     id("com.android.library")
@@ -41,4 +41,6 @@ dependencies {
     implementation(Libs.Android.annotation)
 
     implementation(Libs.Util.gson)
+
+    testImplementation(Libs.Testing.junit)
 }

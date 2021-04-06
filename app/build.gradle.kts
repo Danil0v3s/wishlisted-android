@@ -1,5 +1,5 @@
-import br.com.firstsoft.historiconotificacoes.buildSrc.Libs
-import br.com.firstsoft.historiconotificacoes.buildSrc.Versions
+import app.wishlisted.android.buildSrc.Libs
+import app.wishlisted.android.buildSrc.Versions
 
 plugins {
     id("com.android.application")
@@ -21,7 +21,7 @@ android {
     compileSdkVersion(30)
 
     defaultConfig {
-        applicationId = "br.com.firstsoft.historiconotificacoes.v2"
+        applicationId = "app.wishlisted.android"
         minSdkVersion(21)
         targetSdkVersion(30)
         versionCode = 1
@@ -72,7 +72,6 @@ android {
 dependencies {
     implementation(project(":domain"))
     implementation(project(":data"))
-    implementation(project(":feature-notifcation-recorder"))
 
     implementation(Libs.Kotlin.stdLib)
 

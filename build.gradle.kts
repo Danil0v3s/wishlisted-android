@@ -1,4 +1,4 @@
-import br.com.firstsoft.historiconotificacoes.buildSrc.Versions
+import app.wishlisted.android.buildSrc.Versions
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.com.firstsoft.historiconotificacoes.v2">
+    package="app.wishlisted.android">
 
     <application
-        android:name="br.com.firstsoft.historiconotificacoes.src.NotificationHistoryApplication"
+        android:name=".app.NotificationHistoryApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NotificationHistory">
-        <activity android:name="br.com.firstsoft.historiconotificacoes.src.main.MainActivity">
+        <activity android:name=".app.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

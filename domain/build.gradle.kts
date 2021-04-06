@@ -1,4 +1,4 @@
-import br.com.firstsoft.historiconotificacoes.buildSrc.Libs
+import app.wishlisted.android.buildSrc.Libs
 
 plugins {
     id("com.android.library")
@@ -27,4 +27,6 @@ dependencies {
 
     implementation(Libs.Hilt.core)
     kapt(Libs.Hilt.compiler)
+
+    testImplementation(Libs.Testing.junit)
 }

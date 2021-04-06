@@ -1,6 +1,5 @@
-rootProject.name = "Notification History"
+rootProject.name = "Wishlisted"
 
 include ':app'
 include ':domain'
 include ':data'
-include ':feature-notifcation-recorder'
