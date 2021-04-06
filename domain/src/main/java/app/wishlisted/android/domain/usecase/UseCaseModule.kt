@@ -1,9 +1,7 @@
-package app.wishlisted.android.domain.src.usecase
+package app.wishlisted.android.domain.usecase
 
-import app.wishlisted.android.domain.src.usecase.notification.GetRecentNotificationsUseCase
-import app.wishlisted.android.domain.src.usecase.notification.GetRecentNotificationsUseCaseImpl
-import app.wishlisted.android.domain.src.usecase.notification.SaveNotificationUseCase
-import app.wishlisted.android.domain.src.usecase.notification.SaveNotificationUseCaseImpl
+import app.wishlisted.android.domain.usecase.game.FetchGameDealsUseCase
+import app.wishlisted.android.domain.usecase.game.FetchGameDealsUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,8 +12,5 @@ import dagger.hilt.components.SingletonComponent
 abstract class UseCaseModule {
 
     @Binds
-    abstract fun bindsGetRecentNotificationsUseCase(impl: GetRecentNotificationsUseCaseImpl): GetRecentNotificationsUseCase
-
-    @Binds
-    abstract fun bindsSaveNotificationUseCase(impl: SaveNotificationUseCaseImpl): SaveNotificationUseCase
+    abstract fun bindsFetchGameDealsUseCase(impl: FetchGameDealsUseCaseImpl): FetchGameDealsUseCase
 }

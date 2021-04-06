@@ -92,6 +92,8 @@ dependencies {
     implementation(Libs.Compose.ui)
     implementation(Libs.Compose.navigation)
 
+    implementation(Libs.AppCompanist.coil)
+
     implementation(Libs.Coroutines.android)
     implementation(Libs.Coroutines.core)
 

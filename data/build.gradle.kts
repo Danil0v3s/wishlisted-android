@@ -40,7 +40,11 @@ dependencies {
 
     implementation(Libs.Android.annotation)
 
-    implementation(Libs.Util.gson)
+    implementation(Libs.Retrofit.core)
+    implementation(Libs.Retrofit.converter)
+    implementation(Libs.Retrofit.okhttp)
+    implementation(Libs.Retrofit.moshi)
+    kapt(Libs.Retrofit.codeGen)
 
     testImplementation(Libs.Testing.junit)
 }

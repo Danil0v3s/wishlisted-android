@@ -17,13 +17,20 @@ object Libs {
 
     object Util {
         const val jdkDesugar = "com.android.tools:desugar_jdk_libs:1.0.9"
-        const val gson = "com.google.code.gson:gson:2.8.5"
     }
 
     object AppCompanist {
         const val coil = "com.google.accompanist:accompanist-coil:${Versions.appCompanist}"
         const val insets = "com.google.accompanist:accompanist-insets:${Versions.appCompanist}"
         const val pager = "com.google.accompanist:accompanist-pager:${Versions.appCompanist}"
+    }
+
+    object Retrofit {
+        const val moshi = "com.squareup.moshi:moshi-kotlin:1.11.0"
+        const val okhttp = "com.squareup.okhttp3:okhttp:4.9.1"
+        const val core = "com.squareup.retrofit2:retrofit:2.9.0"
+        const val converter = "com.squareup.retrofit2:converter-moshi:2.9.0"
+        const val codeGen = "com.squareup.moshi:moshi-kotlin-codegen:1.11.0"
     }
 
     object Kotlin {

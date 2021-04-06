@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -23,68 +25,62 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.wishlisted.android.R
-import app.wishlisted.android.domain.src.model.AppNotification
+import app.wishlisted.android.domain.model.Game
+import com.google.accompanist.coil.CoilImage
 
 @Composable
 fun RecentScreen(
     recentViewModel: RecentViewModel = viewModel()
 ) {
-    val notifications by recentViewModel.recentNotifications.collectAsState(initial = listOf())
-
-    val items = listOf(
-        AppNotification(0, "Discord", "Message 1", "", "", 0L, emptyMap()),
-        AppNotification(0, "Whatsapp", "Message 2", "", "", 0L, emptyMap()),
-        AppNotification(0, "Twitter", "Message 3", "", "", 0L, emptyMap()),
-        AppNotification(0, "Google", "Message 4", "", "", 0L, emptyMap())
-    )
+    val deals by recentViewModel.deals.collectAsState(initial = listOf())
 
     MaterialTheme {
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            RecentContent(notifications = items)
+            items(deals) { game ->
+                RecentContent(game)
+            }
         }
     }
 }
 
 @Composable
-fun RecentContent(notifications: List<AppNotification>) {
+fun RecentContent(game: Game) {
     val typography = MaterialTheme.typography
 
-    notifications.forEach {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
 
-            Image(
-                painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                contentDescription = null,
-                modifier = Modifier
-                    .clip(shape = RoundedCornerShape(4.dp))
-                    .background(Color.Blue)
-                    .height(64.dp)
-                    .width(64.dp)
+        CoilImage(
+            data = game.images.first().uri,
+            contentDescription = null,
+            modifier = Modifier
+                .clip(shape = RoundedCornerShape(4.dp))
+                .background(Color.Blue)
+                .height(64.dp)
+                .width(64.dp)
+        )
+
+        Column(
+            modifier = Modifier
+                .padding(start = 8.dp)
+        ) {
+            Text(
+                game.productTitle,
+                style = typography.h6
             )
 
-            Column(
-                modifier = Modifier
-                    .padding(start = 8.dp)
-            ) {
-                Text(
-                    it.appName,
-                    style = typography.h6
-                )
-
-                Text(
-                    it.title,
-                    style = typography.body1
-                )
-            }
+            Text(
+                game.shortDescription,
+                style = typography.body1
+            )
         }
-
-        Spacer(modifier = Modifier.height(8.dp))
     }
+
+    Spacer(modifier = Modifier.height(8.dp))
 }

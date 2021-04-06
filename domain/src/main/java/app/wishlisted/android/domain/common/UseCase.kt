@@ -1,4 +1,4 @@
-package app.wishlisted.android.domain.src.common
+package app.wishlisted.android.domain.common
 
 /**
  * Use case with a return type and params.

@@ -1,4 +1,4 @@
-package app.wishlisted.android.domain.src.common
+package app.wishlisted.android.domain.common
 
 sealed class Result<out T> {
     data class Success<T>(val value: T) : Result<T>()

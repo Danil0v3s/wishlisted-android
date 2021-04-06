@@ -1,4 +1,4 @@
-package app.wishlisted.android.domain.src.common
+package app.wishlisted.android.domain.common
 
 /**
  * Suspendable use case with a return type and params.

@@ -1,8 +1,8 @@
 package app.wishlisted.android.app.notifications.recent
 
 import androidx.lifecycle.ViewModel
-import app.wishlisted.android.domain.src.model.AppNotification
-import app.wishlisted.android.domain.src.usecase.notification.GetRecentNotificationsUseCase
+import app.wishlisted.android.domain.model.Game
+import app.wishlisted.android.domain.usecase.game.FetchGameDealsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -11,12 +11,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RecentViewModel @Inject constructor(
-    private val getRecentNotificationsUseCase: GetRecentNotificationsUseCase
+    private val fetchGameDealsUseCase: FetchGameDealsUseCase
 ) : ViewModel() {
 
     @OptIn(InternalCoroutinesApi::class)
-    val recentNotifications: Flow<List<AppNotification>>
+    val deals: Flow<List<Game>>
         get() = flow {
-            getRecentNotificationsUseCase().collect(this)
+            fetchGameDealsUseCase().fold(
+                onSuccess = { this.emit(it) },
+                onFailure = { it.printStackTrace() }
+            )
         }
 }

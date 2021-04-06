@@ -1,4 +1,4 @@
-package app.wishlisted.android.domain.src.common
+package app.wishlisted.android.domain.common
 
 import kotlinx.coroutines.flow.Flow
 
