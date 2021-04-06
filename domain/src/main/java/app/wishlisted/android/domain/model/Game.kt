@@ -56,3 +56,17 @@ class Game(
         var caption: String
     )
 }
+
+enum class GameImagePurpose(val value: String) {
+    BrandedKeyArt("BrandedKeyArt"),
+    TitledHeroArt("TitledHeroArt"),
+    Poster("Poster"),
+    SuperHeroArt("SuperHeroArt"),
+    BoxArt("BoxArt"),
+    FeaturePromotionalSquareArt("FeaturePromotionalSquareArt"),
+    Logo("Logo"),
+    Screenshot("Screenshot")
+}
+
+val Game.brandedKeyArt: String?
+    get() = this.images.firstOrNull { it.purpose == GameImagePurpose.BrandedKeyArt.value }?.uri

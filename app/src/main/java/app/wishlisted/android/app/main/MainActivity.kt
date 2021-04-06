@@ -1,15 +1,13 @@
 package app.wishlisted.android.app.main
 
 import android.os.Bundle
-import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -21,6 +19,7 @@ import app.wishlisted.android.app.notifications.recent.RecentScreen
 import app.wishlisted.android.app.notifications.recent.RecentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+@ExperimentalFoundationApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
@@ -64,25 +63,4 @@ class MainActivity : ComponentActivity() {
             )
         }
     }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.onPermissionChanged(checkNotificationListeningPermission())
-    }
-
-    private fun checkNotificationListeningPermission(): Boolean {
-        val notificationListenerString =
-            Settings.Secure.getString(this.contentResolver, "enabled_notification_listeners")
-        return (
-            notificationListenerString != null && notificationListenerString.contains(
-                packageName
-            )
-            )
-    }
-}
-
-@Preview
-@Composable
-fun DefaultPreview() {
-    RecentScreen()
 }

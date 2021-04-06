@@ -1,30 +1,28 @@
 package app.wishlisted.android.app.notifications.recent
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.wishlisted.android.domain.model.Game
+import app.wishlisted.android.domain.model.brandedKeyArt
 import com.google.accompanist.coil.CoilImage
 
+@ExperimentalFoundationApi
 @Composable
 fun RecentScreen(
     recentViewModel: RecentViewModel = viewModel()
@@ -32,10 +30,8 @@ fun RecentScreen(
     val deals by recentViewModel.deals.collectAsState(initial = listOf())
 
     MaterialTheme {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
+        LazyVerticalGrid(
+            cells = GridCells.Adaptive(80.dp),
         ) {
             items(deals) { game ->
                 RecentContent(game)
@@ -48,36 +44,26 @@ fun RecentScreen(
 fun RecentContent(game: Game) {
     val typography = MaterialTheme.typography
 
-    Row(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
+            .padding(4.dp)
     ) {
 
         CoilImage(
-            data = game.images.first().uri,
+            data = game.brandedKeyArt.orEmpty(),
             contentDescription = null,
             modifier = Modifier
-                .clip(shape = RoundedCornerShape(4.dp))
-                .background(Color.Blue)
-                .height(64.dp)
-                .width(64.dp)
+                .fillMaxWidth()
+                .aspectRatio(0.75f)
         )
 
-        Column(
-            modifier = Modifier
-                .padding(start = 8.dp)
-        ) {
-            Text(
-                game.productTitle,
-                style = typography.h6
-            )
-
-            Text(
-                game.shortDescription,
-                style = typography.body1
-            )
-        }
+        Text(
+            text = game.productTitle,
+            style = typography.body2,
+            fontSize = 12.sp,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis
+        )
     }
-
-    Spacer(modifier = Modifier.height(8.dp))
 }
