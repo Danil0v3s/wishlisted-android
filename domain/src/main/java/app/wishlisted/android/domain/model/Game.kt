@@ -73,8 +73,9 @@ enum class GameImagePurpose(val value: String) {
 	Screenshot("Screenshot")
 }
 
-val Game.brandedKeyArt: String?
-	get() = this.images.firstOrNull { it.purpose == GameImagePurpose.BrandedKeyArt.value }?.uri
+fun Game.getImage(imagePurpose: GameImagePurpose): String? {
+	return this.images.firstOrNull { it.purpose == imagePurpose.value }?.uri
+}
 
 val Game.gameplayTrailer: String?
 	get() = this.videos.firstOrNull { it.purpose == "trailer" }?.uri

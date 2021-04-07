@@ -10,8 +10,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
-import androidx.navigation.compose.*
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.compose.navigate
+import androidx.navigation.compose.popUpTo
 import app.wishlisted.android.app.home.deals.DealsScreen
 import app.wishlisted.android.app.home.deals.DealsViewModel
 import app.wishlisted.android.app.launcher.LauncherScreen

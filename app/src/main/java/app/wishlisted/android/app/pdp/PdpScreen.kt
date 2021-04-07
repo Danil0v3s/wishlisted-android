@@ -8,48 +8,50 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
-import app.wishlisted.android.app.views.player.Player
 import app.wishlisted.android.domain.model.Game
-import app.wishlisted.android.domain.model.brandedKeyArt
+import app.wishlisted.android.domain.model.GameImagePurpose
 import app.wishlisted.android.domain.model.discountAmount
-import app.wishlisted.android.domain.model.gameplayTrailer
+import app.wishlisted.android.domain.model.getImage
 import com.google.accompanist.coil.CoilImage
 import com.google.accompanist.flowlayout.FlowRow
 
 @Composable
 fun PdpScreen(game: Game) {
 	Column {
+		HeroSection(game = game)
 		PrimaryMetadata(game = game)
 		SecondaryMetadata(game = game)
 	}
 }
 
 @Composable
-fun SecondaryMetadata(game: Game) {
-	val typography = MaterialTheme.typography
+fun HeroSection(game: Game) {
+	val posterWidth = 120
+	val offset = (posterWidth / AspectRatio.ThreeByFour / 2).dp
 
-	Column {
-		Row(modifier = Modifier.padding(bottom = 16.dp)) {
-			if (game.price.isOnSale) {
-				Text(
-					text = "$${game.price.gameMsrpPrice}",
-					style = typography.h6,
-					textDecoration = TextDecoration.LineThrough,
-					color = Color.Gray
-				)
-			}
+	Box(Modifier.padding(bottom = offset)) {
+		CoilImage(
+			data = game.getImage(GameImagePurpose.SuperHeroArt).orEmpty(),
+			contentDescription = null,
+			modifier = Modifier
+				.fillMaxWidth()
+				.aspectRatio(AspectRatio.SixteenByNine)
+		)
 
-			Text(
-				text = "$${game.price.gameListPrice}",
-				style = typography.h6
-			)
-		}
+		CoilImage(
+			data = game.getImage(GameImagePurpose.Poster).orEmpty(),
+			contentDescription = null,
+			modifier = Modifier
+				.align(Alignment.BottomCenter)
+				.width(posterWidth.dp)
+				.aspectRatio(AspectRatio.ThreeByFour)
+				.offset(y = offset)
+		)
 	}
 }
 
@@ -58,15 +60,6 @@ fun PrimaryMetadata(game: Game) {
 	val typography = MaterialTheme.typography
 
 	Column {
-		Player(uri = game.gameplayTrailer.orEmpty())
-
-		GameBoxArt(
-			game = game,
-			modifier = Modifier
-				.align(Alignment.CenterHorizontally)
-				.padding(0.dp)
-		)
-
 		DiscountLabel(price = game.price)
 
 		Text(
@@ -106,19 +99,25 @@ fun PrimaryMetadata(game: Game) {
 }
 
 @Composable
-fun GameBoxArt(game: Game, modifier: Modifier) {
-	val width = 120
-	val aspectRatio = 3 / 4f
-	Row(
-		modifier = modifier.offset(y = -(width / aspectRatio / 2).dp)
-	) {
-		CoilImage(
-			data = game.brandedKeyArt.orEmpty(),
-			contentDescription = null,
-			modifier = Modifier
-				.width(width.dp)
-				.aspectRatio(aspectRatio)
-		)
+fun SecondaryMetadata(game: Game) {
+	val typography = MaterialTheme.typography
+
+	Column {
+		Row(modifier = Modifier.padding(bottom = 16.dp)) {
+			if (game.price.isOnSale) {
+				Text(
+					text = "$${game.price.gameMsrpPrice}",
+					style = typography.h6,
+					textDecoration = TextDecoration.LineThrough,
+					color = Color.Gray
+				)
+			}
+
+			Text(
+				text = "$${game.price.gameListPrice}",
+				style = typography.h6
+			)
+		}
 	}
 }
 
@@ -134,4 +133,9 @@ fun DiscountLabel(price: Game.Price) {
 			Text(text = "Save $${price.discountAmount}")
 		}
 	}
+}
+
+object AspectRatio {
+	const val ThreeByFour = 3 / 4f
+	const val SixteenByNine = 16 / 9f
 }

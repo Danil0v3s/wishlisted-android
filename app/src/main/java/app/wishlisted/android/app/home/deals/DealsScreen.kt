@@ -20,7 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.wishlisted.android.domain.model.Game
-import app.wishlisted.android.domain.model.brandedKeyArt
+import app.wishlisted.android.domain.model.GameImagePurpose
+import app.wishlisted.android.domain.model.getImage
 import com.google.accompanist.coil.CoilImage
 
 @ExperimentalFoundationApi
@@ -54,7 +55,7 @@ fun DealsContent(game: Game, onItemClick: (Game) -> Unit) {
     ) {
 
         CoilImage(
-            data = game.brandedKeyArt.orEmpty(),
+            data = game.getImage(GameImagePurpose.Poster).orEmpty(),
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
