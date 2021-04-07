@@ -1,6 +1,7 @@
-package app.wishlisted.android.app.notifications.recent
+package app.wishlisted.android.app.home.deals
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,30 +25,32 @@ import com.google.accompanist.coil.CoilImage
 
 @ExperimentalFoundationApi
 @Composable
-fun RecentScreen(
-    recentViewModel: RecentViewModel = viewModel()
+fun DealsScreen(
+    dealsViewModel: DealsViewModel = viewModel(),
+    onItemClick: (Game) -> Unit
 ) {
-    val deals by recentViewModel.deals.collectAsState(initial = listOf())
+    val deals by dealsViewModel.deals.collectAsState(initial = listOf())
 
     MaterialTheme {
         LazyVerticalGrid(
-            cells = GridCells.Adaptive(80.dp),
+            cells = GridCells.Fixed(3),
         ) {
             items(deals) { game ->
-                RecentContent(game)
+                DealsContent(game, onItemClick)
             }
         }
     }
 }
 
 @Composable
-fun RecentContent(game: Game) {
+fun DealsContent(game: Game, onItemClick: (Game) -> Unit) {
     val typography = MaterialTheme.typography
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(4.dp)
+            .clickable { onItemClick(game) }
     ) {
 
         CoilImage(

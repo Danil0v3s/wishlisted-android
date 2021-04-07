@@ -1,4 +1,4 @@
-package app.wishlisted.android.app.notifications.recent
+package app.wishlisted.android.app.home.deals
 
 import androidx.lifecycle.ViewModel
 import app.wishlisted.android.domain.model.Game
@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 @HiltViewModel
-class RecentViewModel @Inject constructor(
+class DealsViewModel @Inject constructor(
     private val fetchGameDealsUseCase: FetchGameDealsUseCase
 ) : ViewModel() {
 

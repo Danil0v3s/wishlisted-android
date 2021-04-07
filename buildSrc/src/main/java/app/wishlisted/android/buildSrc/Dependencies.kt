@@ -3,7 +3,7 @@ package app.wishlisted.android.buildSrc
 object Versions {
     const val kotlin = "1.4.31"
     const val ktlint = "0.40.0"
-    const val appCompanist = "0.7.0"
+    const val accompanist = "0.7.0"
     const val coroutines = "1.4.2"
     const val junit = "4.13"
     const val compose = "1.0.0-beta03"
@@ -19,10 +19,11 @@ object Libs {
         const val jdkDesugar = "com.android.tools:desugar_jdk_libs:1.0.9"
     }
 
-    object AppCompanist {
-        const val coil = "com.google.accompanist:accompanist-coil:${Versions.appCompanist}"
-        const val insets = "com.google.accompanist:accompanist-insets:${Versions.appCompanist}"
-        const val pager = "com.google.accompanist:accompanist-pager:${Versions.appCompanist}"
+    object Accompanist {
+        const val coil = "com.google.accompanist:accompanist-coil:${Versions.accompanist}"
+        const val insets = "com.google.accompanist:accompanist-insets:${Versions.accompanist}"
+        const val pager = "com.google.accompanist:accompanist-pager:${Versions.accompanist}"
+        const val flow = "com.google.accompanist:accompanist-flowlayout:${Versions.accompanist}"
     }
 
     object Retrofit {
@@ -31,6 +32,10 @@ object Libs {
         const val core = "com.squareup.retrofit2:retrofit:2.9.0"
         const val converter = "com.squareup.retrofit2:converter-moshi:2.9.0"
         const val codeGen = "com.squareup.moshi:moshi-kotlin-codegen:1.11.0"
+    }
+
+    object ExoPlayer {
+        const val core = "com.google.android.exoplayer:exoplayer:2.13.2"
     }
 
     object Kotlin {
