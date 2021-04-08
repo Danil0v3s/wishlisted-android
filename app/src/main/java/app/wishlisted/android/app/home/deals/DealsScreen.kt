@@ -18,7 +18,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
 import app.wishlisted.android.domain.model.Game
 import app.wishlisted.android.domain.model.GameImagePurpose
 import app.wishlisted.android.domain.model.getImage
@@ -27,47 +29,48 @@ import com.google.accompanist.coil.CoilImage
 @ExperimentalFoundationApi
 @Composable
 fun DealsScreen(
-    dealsViewModel: DealsViewModel = viewModel(),
-    onItemClick: (Game) -> Unit
+	onItemClick: (Game) -> Unit
 ) {
-    val deals by dealsViewModel.deals.collectAsState(initial = listOf())
+	val dealsViewModel: DealsViewModel = hiltNavGraphViewModel()
 
-    MaterialTheme {
-        LazyVerticalGrid(
-            cells = GridCells.Fixed(3),
-        ) {
-            items(deals) { game ->
-                DealsContent(game, onItemClick)
-            }
-        }
-    }
+	val deals by dealsViewModel.deals.collectAsState(initial = listOf())
+
+	MaterialTheme {
+		LazyVerticalGrid(
+			cells = GridCells.Adaptive(90.dp),
+		) {
+			items(deals) { game ->
+				DealsContent(game, onItemClick)
+			}
+		}
+	}
 }
 
 @Composable
 fun DealsContent(game: Game, onItemClick: (Game) -> Unit) {
-    val typography = MaterialTheme.typography
+	val typography = MaterialTheme.typography
 
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(4.dp)
-            .clickable { onItemClick(game) }
-    ) {
+	Column(
+		modifier = Modifier
+			.fillMaxWidth()
+			.padding(4.dp)
+			.clickable { onItemClick(game) }
+	) {
 
-        CoilImage(
-            data = game.getImage(GameImagePurpose.Poster).orEmpty(),
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(0.75f)
-        )
+		CoilImage(
+			data = game.getImage(GameImagePurpose.Poster).orEmpty(),
+			contentDescription = null,
+			modifier = Modifier
+				.fillMaxWidth()
+				.aspectRatio(0.75f)
+		)
 
-        Text(
-            text = game.productTitle,
-            style = typography.body2,
-            fontSize = 12.sp,
-            maxLines = 2,
-            overflow = TextOverflow.Ellipsis
-        )
-    }
+		Text(
+			text = game.productTitle,
+			style = typography.body2,
+			fontSize = 12.sp,
+			maxLines = 2,
+			overflow = TextOverflow.Ellipsis
+		)
+	}
 }

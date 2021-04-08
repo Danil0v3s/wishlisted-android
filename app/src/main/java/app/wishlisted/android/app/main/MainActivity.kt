@@ -60,9 +60,7 @@ class MainActivity : ComponentActivity() {
 						}
 
 						composable(NavigationScreens.Home.route) {
-							val recentViewModel = hiltNavGraphViewModel<DealsViewModel>()
 							DealsScreen(
-								dealsViewModel = recentViewModel,
 								onItemClick = { game ->
 									navController.putArgument(NavigationScreens.Pdp.Args.game, game)
 									navController.navigate(NavigationScreens.Pdp.route)
