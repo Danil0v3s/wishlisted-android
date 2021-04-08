@@ -11,8 +11,8 @@ import app.wishlisted.android.domain.model.Game
 )
 data class GameDTO(
     @NonNull
-    @PrimaryKey(autoGenerate = false)
-    val productId: String,
+    @PrimaryKey(autoGenerate = true)
+    val gameId: Int,
     @Embedded
     val categories: List<String>,
     @Embedded
@@ -27,6 +27,7 @@ data class GameDTO(
     val images: List<Image>,
     @Embedded
     val videos: List<Video>,
+    val productId: String,
     val releaseDate: String,
     val productTitle: String,
     val href: String,
@@ -36,17 +37,21 @@ data class GameDTO(
     val market: String,
     val language: String
 ) {
+
+    @Entity
     data class Rating(
         val averageRating: Double,
         val ratingCount: Int
     )
 
+    @Entity
     data class Attribute(
         val name: String,
         val minimum: Int,
         val maximum: Int
     )
 
+    @Entity
     data class Eligibility(
         val gamePass: Boolean,
         val eaPlay: Boolean,
@@ -54,6 +59,7 @@ data class GameDTO(
         val gold: Boolean
     )
 
+    @Entity
     data class Price(
         val isPurchasable: Boolean,
         val isGoldSale: Boolean,
@@ -66,11 +72,13 @@ data class GameDTO(
         val hasGoldDiscount: Boolean
     )
 
+    @Entity
     data class Image(
         val purpose: String,
         val uri: String
     )
 
+    @Entity
     data class Video(
         val purpose: String,
         val uri: String,

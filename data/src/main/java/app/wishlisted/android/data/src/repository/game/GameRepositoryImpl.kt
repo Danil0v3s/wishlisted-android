@@ -75,7 +75,7 @@ class GameRepositoryImpl @Inject constructor(
         private val api: GameApi,
         private val dao: GameDao,
         private val fetchIds: suspend (skipItems: Int) -> List<String>
-    ) : RemoteMediator<String, StatusWithGames>() {
+    ) : RemoteMediator<Int, StatusWithGames>() {
 
         override suspend fun initialize(): InitializeAction {
             return InitializeAction.LAUNCH_INITIAL_REFRESH
@@ -83,7 +83,7 @@ class GameRepositoryImpl @Inject constructor(
 
         override suspend fun load(
             loadType: LoadType,
-            state: PagingState<String, StatusWithGames>
+            state: PagingState<Int, StatusWithGames>
         ): MediatorResult {
             try {
                 val skipItemsCount: Int = when (loadType) {

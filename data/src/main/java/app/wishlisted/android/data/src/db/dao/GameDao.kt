@@ -17,5 +17,5 @@ interface GameDao {
 
     @Transaction
     @Query("SELECT * FROM tb_status WHERE statusId = :statusId")
-    fun gamesByStatus(statusId: Int): PagingSource<String, StatusWithGames>
+    fun gamesByStatus(statusId: Int): PagingSource<Int, StatusWithGames>
 }

@@ -3,6 +3,7 @@ package app.wishlisted.android.data.src.db
 import android.content.Context
 import androidx.room.Room
 import app.wishlisted.android.data.src.db.dao.GameDao
+import app.wishlisted.android.data.src.db.dao.StatusDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,5 +30,11 @@ object DatabaseModule {
     @Singleton
     fun providesGameDao(database: AppDatabase): GameDao {
         return database.gameDao()
+    }
+
+    @Provides
+    @Singleton
+    fun providesStatusDao(database: AppDatabase): StatusDao {
+        return database.statusDao()
     }
 }
