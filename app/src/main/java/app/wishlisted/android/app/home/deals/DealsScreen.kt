@@ -6,10 +6,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyGridScope
+import androidx.compose.foundation.lazy.LazyItemScope
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -38,9 +43,10 @@ fun DealsScreen(
     val dealsViewModel: DealsViewModel = hiltNavGraphViewModel()
 
     val deals: LazyPagingItems<Game> = dealsViewModel.deals.collectAsLazyPagingItems()
+    val listState = rememberLazyListState()
 
     MaterialTheme {
-        LazyColumn {
+        LazyColumn(state = listState) {
             items(deals) { game ->
                 DealsContent(game!!, onItemClick)
             }
@@ -54,7 +60,7 @@ fun DealsContent(game: Game, onItemClick: (Game) -> Unit) {
 
     Column(
         modifier = Modifier
-            .fillMaxWidth()
+            .width(90.dp)
             .padding(4.dp)
             .clickable { onItemClick(game) }
     ) {

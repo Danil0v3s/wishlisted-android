@@ -7,7 +7,7 @@ import retrofit2.http.Query
 interface GameApi {
 
     @GET("games/deals")
-    suspend fun fetchDeal(): List<String>
+    suspend fun fetchDeal(@Query("skipItems") skipItems: Int): List<String>
 
     @GET("games/details")
     suspend fun fetchGames(
