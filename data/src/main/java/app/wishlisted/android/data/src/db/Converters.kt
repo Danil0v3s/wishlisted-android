@@ -7,6 +7,60 @@ import com.squareup.moshi.Types
 import com.squareup.moshi.adapter
 import java.io.IOException
 
+object EligibilityConverters {
+    @TypeConverter
+    fun fromString(value: String?): GameDTO.Eligibility? {
+        if (value == null) return null
+        val moshi = Moshi.Builder().build()
+
+        return moshi.adapter(GameDTO.Eligibility::class.java).fromJson(value)
+    }
+
+    @TypeConverter
+    fun fromEntity(value: GameDTO.Eligibility?): String? {
+        if (value == null) return null
+        val moshi = Moshi.Builder().build()
+
+        return moshi.adapter(GameDTO.Eligibility::class.java).toJson(value)
+    }
+}
+
+object PriceConverters {
+    @TypeConverter
+    fun fromString(value: String?): GameDTO.Price? {
+        if (value == null) return null
+        val moshi = Moshi.Builder().build()
+
+        return moshi.adapter(GameDTO.Price::class.java).fromJson(value)
+    }
+
+    @TypeConverter
+    fun fromEntity(value: GameDTO.Price?): String? {
+        if (value == null) return null
+        val moshi = Moshi.Builder().build()
+
+        return moshi.adapter(GameDTO.Price::class.java).toJson(value)
+    }
+}
+
+object RatingConverters {
+    @TypeConverter
+    fun fromString(value: String?): GameDTO.Rating? {
+        if (value == null) return null
+        val moshi = Moshi.Builder().build()
+
+        return moshi.adapter(GameDTO.Rating::class.java).fromJson(value)
+    }
+
+    @TypeConverter
+    fun fromEntity(value: GameDTO.Rating?): String? {
+        if (value == null) return null
+        val moshi = Moshi.Builder().build()
+
+        return moshi.adapter(GameDTO.Rating::class.java).toJson(value)
+    }
+}
+
 object StringConverters {
 
     @TypeConverter
@@ -122,3 +176,4 @@ object AttributeConverters {
         ).toJson(list)
     }
 }
+

@@ -3,30 +3,28 @@ package app.wishlisted.android.data.src.model
 import androidx.annotation.NonNull
 import androidx.room.Embedded
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import app.wishlisted.android.domain.model.Game
+import com.squareup.moshi.JsonClass
 
 @Entity(
-    tableName = "tb_games"
+    tableName = "tb_games",
+//    indices = [
+//        Index(name = "productId", unique = true)
+//    ]
 )
+@JsonClass(generateAdapter = true)
 data class GameDTO(
-    @NonNull
-    @PrimaryKey(autoGenerate = true)
-    val gameId: Int,
-    @Embedded
     val categories: List<String>,
-    @Embedded
     val rating: Rating,
-    @Embedded
     val attributes: List<Attribute>,
-    @Embedded
     val eligibility: Eligibility,
-    @Embedded
     val price: Price,
-    @Embedded
     val images: List<Image>,
-    @Embedded
     val videos: List<Video>,
+    @NonNull
+    @PrimaryKey(autoGenerate = false)
     val productId: String,
     val releaseDate: String,
     val productTitle: String,
@@ -37,21 +35,20 @@ data class GameDTO(
     val market: String,
     val language: String
 ) {
-
-    @Entity
+    @JsonClass(generateAdapter = true)
     data class Rating(
         val averageRating: Double,
         val ratingCount: Int
     )
 
-    @Entity
+    @JsonClass(generateAdapter = true)
     data class Attribute(
         val name: String,
         val minimum: Int,
         val maximum: Int
     )
 
-    @Entity
+    @JsonClass(generateAdapter = true)
     data class Eligibility(
         val gamePass: Boolean,
         val eaPlay: Boolean,
@@ -59,7 +56,7 @@ data class GameDTO(
         val gold: Boolean
     )
 
-    @Entity
+    @JsonClass(generateAdapter = true)
     data class Price(
         val isPurchasable: Boolean,
         val isGoldSale: Boolean,
@@ -72,13 +69,13 @@ data class GameDTO(
         val hasGoldDiscount: Boolean
     )
 
-    @Entity
+    @JsonClass(generateAdapter = true)
     data class Image(
         val purpose: String,
         val uri: String
     )
 
-    @Entity
+    @JsonClass(generateAdapter = true)
     data class Video(
         val purpose: String,
         val uri: String,

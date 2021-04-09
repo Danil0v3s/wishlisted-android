@@ -18,7 +18,10 @@ import app.wishlisted.android.data.src.model.StatusGameCrossRef
     GameImageConverters::class,
     GameVideoConverters::class,
     StringConverters::class,
-    AttributeConverters::class
+    AttributeConverters::class,
+    EligibilityConverters::class,
+    PriceConverters::class,
+    RatingConverters::class,
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun gameDao(): GameDao

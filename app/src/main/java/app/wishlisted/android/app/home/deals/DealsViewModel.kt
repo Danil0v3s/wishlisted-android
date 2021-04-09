@@ -1,11 +1,13 @@
 package app.wishlisted.android.app.home.deals
 
 import androidx.lifecycle.ViewModel
+import androidx.paging.PagingData
 import app.wishlisted.android.domain.model.Game
 import app.wishlisted.android.domain.usecase.game.FetchGameDealsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
@@ -15,11 +17,8 @@ class DealsViewModel @Inject constructor(
 ) : ViewModel() {
 
     @OptIn(InternalCoroutinesApi::class)
-    val deals: Flow<List<Game>>
+    val deals: Flow<PagingData<Game>>
         get() = flow {
-            fetchGameDealsUseCase().fold(
-                onSuccess = { this.emit(it) },
-                onFailure = { it.printStackTrace() }
-            )
+            fetchGameDealsUseCase().collect(this)
         }
 }

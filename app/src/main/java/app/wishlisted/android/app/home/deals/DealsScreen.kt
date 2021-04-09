@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
@@ -19,10 +20,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltNavGraphViewModel
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
 import app.wishlisted.android.domain.model.Game
 import app.wishlisted.android.domain.model.GameImagePurpose
 import app.wishlisted.android.domain.model.getImage
 import com.google.accompanist.coil.CoilImage
+import com.google.accompanist.flowlayout.FlowRow
 
 @ExperimentalFoundationApi
 @Composable
@@ -31,14 +37,12 @@ fun DealsScreen(
 ) {
     val dealsViewModel: DealsViewModel = hiltNavGraphViewModel()
 
-    val deals by dealsViewModel.deals.collectAsState(initial = listOf())
+    val deals: LazyPagingItems<Game> = dealsViewModel.deals.collectAsLazyPagingItems()
 
     MaterialTheme {
-        LazyVerticalGrid(
-            cells = GridCells.Adaptive(90.dp),
-        ) {
+        LazyColumn {
             items(deals) { game ->
-                DealsContent(game, onItemClick)
+                DealsContent(game!!, onItemClick)
             }
         }
     }

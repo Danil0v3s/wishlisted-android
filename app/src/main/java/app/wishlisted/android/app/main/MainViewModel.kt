@@ -15,7 +15,7 @@ class MainViewModel @Inject constructor(
     private val fetchStatusUseCase: FetchGameStatusesUseCase
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(State.Loading)
+    private val _state = MutableStateFlow<State>(State.Loading)
     val state: StateFlow<State>
         get() = _state
 
@@ -28,8 +28,12 @@ class MainViewModel @Inject constructor(
     private suspend fun fetchStatuses() {
         fetchStatusUseCase().fold(
             onSuccess = {
+                _state.value = State.Done
             },
-            onFailure = {}
+            onFailure = {
+                it.printStackTrace()
+                _state.value = State.Error
+            }
         )
     }
 

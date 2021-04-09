@@ -9,8 +9,12 @@ interface GameApi {
     @GET("games/deals")
     suspend fun fetchDeal(): List<String>
 
-    @GET("games/")
-    suspend fun fetchGames(@Query("productIds") productIds: List<String>): List<GameDTO>
+    @GET("games/details")
+    suspend fun fetchGames(
+        @Query("gameIds") productIds: List<String>,
+        @Query("market") market: String,
+        @Query("language") language: String,
+    ): List<GameDTO>
 
     @GET("games/status")
     suspend fun fetchStatuses(): List<String>

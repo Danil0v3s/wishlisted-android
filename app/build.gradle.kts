@@ -5,6 +5,7 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-kapt")
+    id("kotlin-parcelize")
     id("dagger.hilt.android.plugin")
 }
 
@@ -91,6 +92,9 @@ dependencies {
     implementation(Libs.Compose.tooling)
     implementation(Libs.Compose.ui)
     implementation(Libs.Compose.navigation)
+
+    implementation(Libs.Paging.runtime)
+    implementation(Libs.Paging.compose)
 
     implementation(Libs.Accompanist.coil)
     implementation(Libs.Accompanist.flow)

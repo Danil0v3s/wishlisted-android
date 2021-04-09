@@ -14,6 +14,7 @@ import app.wishlisted.android.data.src.db.AppDatabase
 import app.wishlisted.android.data.src.db.dao.GameDao
 import app.wishlisted.android.data.src.db.dao.StatusDao
 import app.wishlisted.android.data.src.model.StatusDTO
+import app.wishlisted.android.data.src.model.StatusGameCrossRef
 import app.wishlisted.android.data.src.model.StatusWithGames
 import app.wishlisted.android.data.src.model.toDomainModel
 import app.wishlisted.android.domain.common.Result
@@ -39,7 +40,8 @@ class GameRepositoryImpl @Inject constructor(
             database = appDatabase,
             api = gameApi,
             dao = gameDao,
-            fetchIds = { gameApi.fetchDeal() }
+            fetchIds = { gameApi.fetchDeal() },
+            statusId = statusId
         )
 
         return Pager(
@@ -74,12 +76,11 @@ class GameRepositoryImpl @Inject constructor(
         private val database: AppDatabase,
         private val api: GameApi,
         private val dao: GameDao,
-        private val fetchIds: suspend (skipItems: Int) -> List<String>
+        private val fetchIds: suspend (skipItems: Int) -> List<String>,
+        private val statusId: Int
     ) : RemoteMediator<Int, StatusWithGames>() {
 
-        override suspend fun initialize(): InitializeAction {
-            return InitializeAction.LAUNCH_INITIAL_REFRESH
-        }
+        override suspend fun initialize() = InitializeAction.LAUNCH_INITIAL_REFRESH
 
         override suspend fun load(
             loadType: LoadType,
@@ -98,13 +99,16 @@ class GameRepositoryImpl @Inject constructor(
                     return MediatorResult.Success(endOfPaginationReached = true)
                 }
 
-                val games = api.fetchGames(ids)
+                val games = api.fetchGames(ids, "us", "en")
+                val statusWithIdsRef =
+                    games.map { game -> StatusGameCrossRef(statusId, game.productId) }
 
                 database.withTransaction {
                     dao.insertAll(games)
+                    dao.insertAllStatusGameCrossRef(statusWithIdsRef)
                 }
 
-                return MediatorResult.Success(endOfPaginationReached = games.isEmpty())
+                return MediatorResult.Success(endOfPaginationReached = true)
             } catch (e: IOException) {
                 return MediatorResult.Error(e)
             } catch (e: HttpException) {
