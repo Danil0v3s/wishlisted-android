@@ -8,9 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -20,7 +18,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltNavGraphViewModel
-import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import app.wishlisted.android.domain.model.Game
@@ -34,7 +31,7 @@ fun DealsScreen(
     onItemClick: (Game) -> Unit
 ) {
     val dealsViewModel: DealsViewModel = hiltNavGraphViewModel()
-    val deals: LazyPagingItems<Game> = dealsViewModel.deals.collectAsLazyPagingItems()
+    val deals = dealsViewModel.deals.collectAsLazyPagingItems()
 
     LazyColumn(
         modifier = Modifier.fillMaxSize()

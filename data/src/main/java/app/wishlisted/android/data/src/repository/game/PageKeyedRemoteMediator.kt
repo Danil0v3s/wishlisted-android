@@ -22,7 +22,7 @@ class PageKeyedRemoteMediator(
     private val dao: GameDao,
     private val remoteKeyDao: GameStatusRemoteKeyDao,
     private val fetchIds: suspend (skipItems: Int) -> GameApi.GamesIdsResponse,
-    private val statusId: Int
+    private val fetchStatusId: suspend () -> Int,
 ) : RemoteMediator<Int, StatusWithGames>() {
 
     override suspend fun initialize() = InitializeAction.LAUNCH_INITIAL_REFRESH
@@ -31,6 +31,8 @@ class PageKeyedRemoteMediator(
         loadType: LoadType,
         state: PagingState<Int, StatusWithGames>
     ): MediatorResult {
+        val statusId = fetchStatusId()
+
         try {
             val skipItemsCount: Int = when (loadType) {
                 LoadType.REFRESH -> 0
