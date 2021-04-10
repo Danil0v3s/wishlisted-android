@@ -4,11 +4,11 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -34,13 +34,12 @@ fun DealsScreen(
     val dealsViewModel: DealsViewModel = hiltNavGraphViewModel()
 
     val deals: LazyPagingItems<Game> = dealsViewModel.deals.collectAsLazyPagingItems()
-    val listState = rememberLazyListState()
 
-    MaterialTheme {
-        LazyColumn(state = listState) {
-            itemsIndexed(deals) { index, game ->
-                DealsContent(game!!, onItemClick)
-            }
+    LazyColumn(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        itemsIndexed(deals) { _, game ->
+            DealsContent(game!!, onItemClick)
         }
     }
 }

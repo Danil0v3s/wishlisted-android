@@ -10,7 +10,10 @@ object Versions {
     const val room = "2.3.0-rc01"
     const val androidTest = "1.2.0"
     const val hilt = "2.33-beta"
-    const val paging = "3.0.0-beta02"
+    const val paging = "3.0.0-beta03"
+    const val okhttp = "4.9.1"
+    const val retrofit = "2.9.0"
+    const val moshi = "1.11.0"
 }
 
 object Libs {
@@ -27,11 +30,12 @@ object Libs {
     }
 
     object Retrofit {
-        const val moshi = "com.squareup.moshi:moshi-kotlin:1.11.0"
-        const val okhttp = "com.squareup.okhttp3:okhttp:4.9.1"
-        const val core = "com.squareup.retrofit2:retrofit:2.9.0"
-        const val converter = "com.squareup.retrofit2:converter-moshi:2.9.0"
-        const val codeGen = "com.squareup.moshi:moshi-kotlin-codegen:1.11.0"
+        const val moshi = "com.squareup.moshi:moshi-kotlin:${Versions.moshi}"
+        const val codeGen = "com.squareup.moshi:moshi-kotlin-codegen:${Versions.moshi}"
+        const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp}"
+        const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp}"
+        const val core = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
+        const val converter = "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
     }
 
     object ExoPlayer {

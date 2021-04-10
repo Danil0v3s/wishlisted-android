@@ -44,6 +44,7 @@ dependencies {
     implementation(Libs.Retrofit.core)
     implementation(Libs.Retrofit.converter)
     implementation(Libs.Retrofit.okhttp)
+    implementation(Libs.Retrofit.loggingInterceptor)
     implementation(Libs.Retrofit.moshi)
     kapt(Libs.Retrofit.codeGen)
 

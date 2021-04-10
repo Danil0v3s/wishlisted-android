@@ -54,7 +54,11 @@ class GameRepositoryImpl @Inject constructor(
             remoteMediator = mediator
         ) {
             gameDao.gamesByStatus(statusId)
-        }.flow.map { it.flatMap { it.games.map { it.toDomainModel() } } }
+        }.flow.map { pagingData ->
+            pagingData.flatMap { statusWithGames ->
+                statusWithGames.games.map { it.toDomainModel() }
+            }
+        }
     }
 
     override suspend fun fetchStatus(): Result<Unit> {
