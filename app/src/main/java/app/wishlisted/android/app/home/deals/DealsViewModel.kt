@@ -18,7 +18,5 @@ class DealsViewModel @Inject constructor(
 
     @OptIn(InternalCoroutinesApi::class)
     val deals: Flow<PagingData<Game>>
-        get() = flow {
-            fetchGameDealsUseCase().collect(this)
-        }
+        get() = fetchGameDealsUseCase()
 }

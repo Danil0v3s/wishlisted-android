@@ -30,35 +30,22 @@ import javax.inject.Inject
 
 class GameRepositoryImpl @Inject constructor(
     private val gameApi: GameApi,
-    private val gameDao: GameDao,
-    private val statusDao: StatusDao,
-    private val remoteKeyDao: GameStatusRemoteKeyDao,
-    private val appDatabase: AppDatabase
+    private val statusDao: StatusDao
 ) : GameRepository {
 
     @OptIn(ExperimentalPagingApi::class)
-    override suspend fun fetchGameDeals(): Flow<PagingData<Game>> {
-        val statusId = statusDao.fetchAll().firstOrNull { it.name == "Deals" }?.statusId ?: 0
-
-        val mediator = PageKeyedRemoteMediator(
-            database = appDatabase,
+    override fun fetchGameDeals(): Flow<PagingData<Game>> {
+        val dataSource = GamesDataSource(
             api = gameApi,
-            dao = gameDao,
             fetchIds = { gameApi.fetchDeals(it) },
-            remoteKeyDao = remoteKeyDao,
-            statusId = statusId
+            market = "us",
+            language = "en"
         )
 
         return Pager(
             config = PagingConfig(20),
-            remoteMediator = mediator
-        ) {
-            gameDao.gamesByStatus(statusId)
-        }.flow.map { pagingData ->
-            pagingData.flatMap { statusWithGames ->
-                statusWithGames.games.map { it.toDomainModel() }
-            }
-        }
+            pagingSourceFactory = { dataSource }
+        ).flow
     }
 
     override suspend fun fetchStatus(): Result<Unit> {
@@ -71,64 +58,6 @@ class GameRepositoryImpl @Inject constructor(
             Result.Success(Unit)
         } catch (e: Exception) {
             Result.Failure(e)
-        }
-    }
-
-    @OptIn(ExperimentalPagingApi::class)
-    class PageKeyedRemoteMediator(
-        private val database: AppDatabase,
-        private val api: GameApi,
-        private val dao: GameDao,
-        private val remoteKeyDao: GameStatusRemoteKeyDao,
-        private val fetchIds: suspend (skipItems: Int) -> GameApi.GamesIdsResponse,
-        private val statusId: Int
-    ) : RemoteMediator<Int, StatusWithGames>() {
-
-        override suspend fun initialize() = InitializeAction.LAUNCH_INITIAL_REFRESH
-
-        override suspend fun load(
-            loadType: LoadType,
-            state: PagingState<Int, StatusWithGames>
-        ): MediatorResult {
-            try {
-                val skipItemsCount: Int = when (loadType) {
-                    LoadType.REFRESH -> 0
-                    LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
-                    LoadType.APPEND -> {
-                        val remoteKey = database.withTransaction {
-                            remoteKeyDao.remoteKeyByStatus(statusId)
-                        }
-
-                        if (remoteKey.nextPage == null) {
-                            return MediatorResult.Success(endOfPaginationReached = true)
-                        }
-
-                        remoteKey.nextPage
-                    }
-                }
-
-                val idsResponse = fetchIds(skipItemsCount)
-                val games = api.fetchGames(idsResponse.data, "us", "en")
-                val statusWithIdsRef =
-                    games.map { game -> StatusGameCrossRef(statusId, game.productId) }
-
-                database.withTransaction {
-                    remoteKeyDao.insert(
-                        GameStatusRemoteKey(
-                            statusId,
-                            idsResponse.pagingInfo.nextPage
-                        )
-                    )
-                    dao.insertAll(games)
-                    dao.insertAllStatusGameCrossRef(statusWithIdsRef)
-                }
-
-                return MediatorResult.Success(endOfPaginationReached = games.isEmpty())
-            } catch (e: IOException) {
-                return MediatorResult.Error(e)
-            } catch (e: HttpException) {
-                return MediatorResult.Error(e)
-            }
         }
     }
 }
