@@ -4,7 +4,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.flatMap
+import androidx.paging.map
 import app.wishlisted.android.data.src.api.game.GameApi
 import app.wishlisted.android.data.src.db.AppDatabase
 import app.wishlisted.android.data.src.db.dao.GameDao
@@ -16,7 +16,7 @@ import app.wishlisted.android.domain.common.Result
 import app.wishlisted.android.domain.model.Game
 import app.wishlisted.android.domain.repository.GameRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
 import javax.inject.Inject
 
 class GameRepositoryImpl @Inject constructor(
@@ -47,11 +47,7 @@ class GameRepositoryImpl @Inject constructor(
             remoteMediator = mediator
         ) {
             gameDao.gamesByStatus(statusId)
-        }.flow.map { pagingData ->
-            pagingData.flatMap { statusWithGames ->
-                statusWithGames.games.map { it.toDomainModel() }
-            }
-        }
+        }.flow.mapLatest { pagingData -> pagingData.map { it.toDomainModel() } }
     }
 
     override suspend fun fetchStatus(): Result<Unit> {

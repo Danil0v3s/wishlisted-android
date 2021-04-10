@@ -9,9 +9,9 @@ import app.wishlisted.android.data.src.api.game.GameApi
 import app.wishlisted.android.data.src.db.AppDatabase
 import app.wishlisted.android.data.src.db.dao.GameDao
 import app.wishlisted.android.data.src.db.dao.GameStatusRemoteKeyDao
+import app.wishlisted.android.data.src.model.GameDTO
 import app.wishlisted.android.data.src.model.GameStatusRemoteKey
 import app.wishlisted.android.data.src.model.StatusGameCrossRef
-import app.wishlisted.android.data.src.model.StatusWithGames
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -23,13 +23,13 @@ class PageKeyedRemoteMediator(
     private val remoteKeyDao: GameStatusRemoteKeyDao,
     private val fetchIds: suspend (skipItems: Int) -> GameApi.GamesIdsResponse,
     private val fetchStatusId: suspend () -> Int,
-) : RemoteMediator<Int, StatusWithGames>() {
+) : RemoteMediator<Int, GameDTO>() {
 
     override suspend fun initialize() = InitializeAction.LAUNCH_INITIAL_REFRESH
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, StatusWithGames>
+        state: PagingState<Int, GameDTO>
     ): MediatorResult {
         val statusId = fetchStatusId()
 

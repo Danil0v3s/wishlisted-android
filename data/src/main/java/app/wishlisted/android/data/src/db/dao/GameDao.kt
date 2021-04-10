@@ -8,7 +8,6 @@ import androidx.room.Query
 import androidx.room.Transaction
 import app.wishlisted.android.data.src.model.GameDTO
 import app.wishlisted.android.data.src.model.StatusGameCrossRef
-import app.wishlisted.android.data.src.model.StatusWithGames
 
 @Dao
 interface GameDao {
@@ -20,6 +19,12 @@ interface GameDao {
     suspend fun insertAllStatusGameCrossRef(games: List<StatusGameCrossRef>)
 
     @Transaction
-    @Query("SELECT * FROM tb_status WHERE statusId = :statusId")
-    fun gamesByStatus(statusId: Int): PagingSource<Int, StatusWithGames>
+    @Query(
+        """
+        SELECT * FROM tb_games game WHERE game.productId IN (
+            SELECT productId FROM StatusGameCrossRef ref WHERE ref.statusId = :statusId
+        )
+    """
+    )
+    fun gamesByStatus(statusId: Int): PagingSource<Int, GameDTO>
 }
