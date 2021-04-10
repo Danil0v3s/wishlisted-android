@@ -6,8 +6,19 @@ import retrofit2.http.Query
 
 interface GameApi {
 
+    data class GamesIdsResponse(
+        val data: List<String>,
+        val pagingInfo: PagingInfo
+    ) {
+        data class PagingInfo(
+            val totalItems: Int,
+            val currentPage: Int,
+            val nextPage: Int?
+        )
+    }
+
     @GET("games/deals")
-    suspend fun fetchDeal(@Query("skipItems") skipItems: Int): List<String>
+    suspend fun fetchDeals(@Query("skipItems") skipItems: Int): GamesIdsResponse
 
     @GET("games/details")
     suspend fun fetchGames(

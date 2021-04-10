@@ -29,6 +29,7 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
+import androidx.paging.compose.itemsIndexed
 import app.wishlisted.android.domain.model.Game
 import app.wishlisted.android.domain.model.GameImagePurpose
 import app.wishlisted.android.domain.model.getImage
@@ -47,7 +48,7 @@ fun DealsScreen(
 
     MaterialTheme {
         LazyColumn(state = listState) {
-            items(deals) { game ->
+            itemsIndexed(deals) { index, game ->
                 DealsContent(game!!, onItemClick)
             }
         }

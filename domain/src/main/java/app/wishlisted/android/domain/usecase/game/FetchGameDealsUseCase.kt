@@ -1,7 +1,6 @@
 package app.wishlisted.android.domain.usecase.game
 
 import androidx.paging.PagingData
-import app.wishlisted.android.domain.common.Result
 import app.wishlisted.android.domain.common.SuspendUseCaseWithoutParams
 import app.wishlisted.android.domain.model.Game
 import app.wishlisted.android.domain.repository.GameRepository

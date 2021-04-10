@@ -6,7 +6,7 @@ object Versions {
     const val accompanist = "0.7.0"
     const val coroutines = "1.4.2"
     const val junit = "4.13"
-    const val compose = "1.0.0-beta03"
+    const val compose = "1.0.0-beta04"
     const val room = "2.3.0-rc01"
     const val androidTest = "1.2.0"
     const val hilt = "2.33-beta"
@@ -59,9 +59,11 @@ object Libs {
     }
 
     object Compose {
-        const val activity = "androidx.activity:activity-compose:1.3.0-alpha05"
+        const val activity = "androidx.activity:activity-compose:1.3.0-alpha06"
         const val constraint = "androidx.constraintlayout:constraintlayout-compose:1.0.0-alpha03"
-        const val navigation = "androidx.navigation:navigation-compose:1.0.0-alpha09"
+        const val navigation = "androidx.navigation:navigation-compose:1.0.0-alpha10"
+        const val animation = "androidx.compose.animation:animation:1.0.0-beta04"
+        const val animationCore = "androidx.compose.animation:animation-core:1.0.0-beta04"
         const val runtime = "androidx.compose.runtime:runtime:${Versions.compose}"
         const val foundation = "androidx.compose.foundation:foundation:${Versions.compose}"
         const val layout = "androidx.compose.foundation:foundation-layout:${Versions.compose}"
