@@ -1,9 +1,7 @@
 package app.wishlisted.android.data.src.model
 
 import androidx.annotation.NonNull
-import androidx.room.Embedded
 import androidx.room.Entity
-import androidx.room.Index
 import androidx.room.PrimaryKey
 import app.wishlisted.android.domain.model.Game
 import com.squareup.moshi.JsonClass

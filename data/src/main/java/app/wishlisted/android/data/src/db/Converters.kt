@@ -5,7 +5,6 @@ import app.wishlisted.android.data.src.model.GameDTO
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import com.squareup.moshi.adapter
-import java.io.IOException
 
 object EligibilityConverters {
     @TypeConverter
@@ -176,4 +175,3 @@ object AttributeConverters {
         ).toJson(list)
     }
 }
-
