@@ -3,10 +3,8 @@ package app.wishlisted.android.buildSrc
 object Versions {
     const val kotlin = "1.4.31"
     const val ktlint = "0.40.0"
-    const val accompanist = "0.7.0"
     const val coroutines = "1.4.2"
     const val junit = "4.13"
-    const val compose = "1.0.0-beta04"
     const val room = "2.3.0-rc01"
     const val androidTest = "1.2.0"
     const val hilt = "2.33-beta"
@@ -14,19 +12,13 @@ object Versions {
     const val okhttp = "4.9.1"
     const val retrofit = "2.9.0"
     const val moshi = "1.11.0"
+    const val coil = "1.1.1"
 }
 
 object Libs {
 
     object Util {
         const val jdkDesugar = "com.android.tools:desugar_jdk_libs:1.0.9"
-    }
-
-    object Accompanist {
-        const val coil = "com.google.accompanist:accompanist-coil:${Versions.accompanist}"
-        const val insets = "com.google.accompanist:accompanist-insets:${Versions.accompanist}"
-        const val pager = "com.google.accompanist:accompanist-pager:${Versions.accompanist}"
-        const val flow = "com.google.accompanist:accompanist-flowlayout:${Versions.accompanist}"
     }
 
     object Retrofit {
@@ -45,7 +37,6 @@ object Libs {
     object Kotlin {
         const val gradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
         const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}"
-        const val extensions = "org.jetbrains.kotlin:kotlin-android-extensions:${Versions.kotlin}"
     }
 
     object Coroutines {
@@ -57,29 +48,22 @@ object Libs {
     object Android {
         const val annotation = "androidx.annotation:annotation:1.2.0"
         const val appCompat = "androidx.appcompat:appcompat:1.2.0"
+        const val activity = "androidx.activity:activity:1.2.2"
+        const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.0.4"
+        const val fragment = "androidx.fragment:fragment-ktx:1.3.2"
+        const val navigationFragment = "androidx.navigation:navigation-fragment-ktx:2.3.5"
+        const val navigationUi = "androidx.navigation:navigation-ui-ktx:2.3.5"
         const val palette = "androidx.palette:palette:1.0.0"
         const val coreKtx = "androidx.core:core-ktx:1.5.0-beta03"
         const val gradle = "com.android.tools.build:gradle:7.0.0-alpha11"
     }
 
-    object Compose {
-        const val activity = "androidx.activity:activity-compose:1.3.0-alpha06"
-        const val constraint = "androidx.constraintlayout:constraintlayout-compose:1.0.0-alpha03"
-        const val navigation = "androidx.navigation:navigation-compose:1.0.0-alpha10"
-        const val animation = "androidx.compose.animation:animation:1.0.0-beta04"
-        const val animationCore = "androidx.compose.animation:animation-core:1.0.0-beta04"
-        const val runtime = "androidx.compose.runtime:runtime:${Versions.compose}"
-        const val foundation = "androidx.compose.foundation:foundation:${Versions.compose}"
-        const val layout = "androidx.compose.foundation:foundation-layout:${Versions.compose}"
-        const val ui = "androidx.compose.ui:ui:${Versions.compose}"
-        const val material = "androidx.compose.material:material:${Versions.compose}"
-        const val materialIconsExtended = "androidx.compose.material:material-icons-extended:${Versions.compose}"
-        const val tooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
+    object Lifecycle {
+        const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-beta01"
     }
 
-    object Lifecycle {
-        const val viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha03"
-        const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-beta01"
+    object Coil {
+        const val core = "io.coil-kt:coil:${Versions.coil}"
     }
 
     object Room {
@@ -90,7 +74,6 @@ object Libs {
 
     object Paging {
         const val runtime = "androidx.paging:paging-runtime:${Versions.paging}"
-        const val compose = "androidx.paging:paging-compose:1.0.0-alpha08"
         const val tests = "androidx.paging:paging-common:${Versions.paging}"
     }
 
@@ -110,6 +93,5 @@ object Libs {
         const val core = "com.google.dagger:hilt-android:${Versions.hilt}"
         const val compiler = "com.google.dagger:hilt-compiler:${Versions.hilt}"
         const val gradle = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}"
-        const val navigation = "androidx.hilt:hilt-navigation-compose:1.0.0-alpha01"
     }
 }

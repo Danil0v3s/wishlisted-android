@@ -7,6 +7,7 @@ plugins {
     id("kotlin-kapt")
     id("kotlin-parcelize")
     id("dagger.hilt.android.plugin")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 kapt {
@@ -46,7 +47,10 @@ android {
         }
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 
@@ -58,15 +62,11 @@ android {
     }
 
     buildFeatures {
-        compose = true
+        viewBinding = true
     }
 
     kotlinOptions {
         jvmTarget = "1.8"
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.compose
     }
 }
 
@@ -78,26 +78,18 @@ dependencies {
 
     implementation(Libs.Android.coreKtx)
     implementation(Libs.Android.palette)
+    implementation(Libs.Android.activity)
+    implementation(Libs.Android.fragment)
+    implementation(Libs.Android.appCompat)
+    implementation(Libs.Android.constraintLayout)
+    implementation(Libs.Android.navigationFragment)
+    implementation(Libs.Android.navigationUi)
 
-    implementation(Libs.Lifecycle.viewModelCompose)
+    implementation(Libs.Coil.core)
+
     implementation(Libs.Lifecycle.viewModel)
 
-    implementation(Libs.Compose.activity)
-    implementation(Libs.Compose.constraint)
-    implementation(Libs.Compose.foundation)
-    implementation(Libs.Compose.layout)
-    implementation(Libs.Compose.material)
-    implementation(Libs.Compose.materialIconsExtended)
-    implementation(Libs.Compose.runtime)
-    implementation(Libs.Compose.tooling)
-    implementation(Libs.Compose.ui)
-    implementation(Libs.Compose.navigation)
-
     implementation(Libs.Paging.runtime)
-    implementation(Libs.Paging.compose)
-
-    implementation(Libs.Accompanist.coil)
-    implementation(Libs.Accompanist.flow)
 
     implementation(Libs.ExoPlayer.core)
 
@@ -105,7 +97,6 @@ dependencies {
     implementation(Libs.Coroutines.core)
 
     implementation(Libs.Hilt.core)
-    implementation(Libs.Hilt.navigation)
     kapt(Libs.Hilt.compiler)
 
     coreLibraryDesugaring(Libs.Util.jdkDesugar)
