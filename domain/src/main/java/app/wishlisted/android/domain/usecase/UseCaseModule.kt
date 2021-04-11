@@ -2,6 +2,8 @@ package app.wishlisted.android.domain.usecase
 
 import app.wishlisted.android.domain.usecase.game.FetchGameDealsUseCase
 import app.wishlisted.android.domain.usecase.game.FetchGameDealsUseCaseImpl
+import app.wishlisted.android.domain.usecase.game.FetchGameDetailsUseCase
+import app.wishlisted.android.domain.usecase.game.FetchGameDetailsUseCaseImpl
 import app.wishlisted.android.domain.usecase.game.FetchGameStatusesUseCase
 import app.wishlisted.android.domain.usecase.game.FetchGameStatusesUseCaseImpl
 import dagger.Binds
@@ -18,4 +20,7 @@ abstract class UseCaseModule {
 
     @Binds
     abstract fun bindsFetchGameStatusesUseCase(impl: FetchGameStatusesUseCaseImpl): FetchGameStatusesUseCase
+
+    @Binds
+    abstract fun bindsFetchGameDetails(impl: FetchGameDetailsUseCaseImpl): FetchGameDetailsUseCase
 }

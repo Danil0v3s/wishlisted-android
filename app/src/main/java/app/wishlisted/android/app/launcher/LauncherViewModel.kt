@@ -1,23 +1,24 @@
-package app.wishlisted.android.app.main
+package app.wishlisted.android.app.launcher
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import app.wishlisted.android.domain.usecase.game.FetchGameStatusesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class LauncherViewModel @Inject constructor(
     private val fetchStatusUseCase: FetchGameStatusesUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<State>(State.Loading)
-    val state: StateFlow<State>
-        get() = _state
+    val state: LiveData<State>
+        get() = _state.asLiveData()
 
     init {
         viewModelScope.launch(Dispatchers.IO) {

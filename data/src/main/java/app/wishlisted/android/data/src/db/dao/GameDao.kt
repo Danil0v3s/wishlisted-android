@@ -8,6 +8,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import app.wishlisted.android.data.src.model.GameDTO
 import app.wishlisted.android.data.src.model.StatusGameCrossRef
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface GameDao {
@@ -27,4 +28,7 @@ interface GameDao {
     """
     )
     fun gamesByStatus(statusId: Int): PagingSource<Int, GameDTO>
+
+    @Query("SELECT * FROM tb_games WHERE productId = :productId")
+    fun gameByProductId(productId: String): Flow<GameDTO>
 }

@@ -1,16 +1,8 @@
 package app.wishlisted.android.app.main
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import app.wishlisted.android.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
-
-    private val viewModel by viewModels<MainViewModel>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-}
+class MainActivity : AppCompatActivity(R.layout.main_activity)

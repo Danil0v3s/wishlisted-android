@@ -17,6 +17,8 @@ import app.wishlisted.android.domain.model.Game
 import app.wishlisted.android.domain.repository.GameRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.transform
 import javax.inject.Inject
 
 class GameRepositoryImpl @Inject constructor(
@@ -60,6 +62,15 @@ class GameRepositoryImpl @Inject constructor(
             Result.Success(Unit)
         } catch (e: Exception) {
             Result.Failure(e)
+        }
+    }
+
+    override fun fetchGameDetails(productId: String): Flow<Game> {
+        return gameDao.gameByProductId(productId).onStart {
+            val data = gameApi.fetchGames(listOf(productId), "us", "en")
+            gameDao.insertAll(data)
+        }.transform {
+            emit(it.toDomainModel())
         }
     }
 }

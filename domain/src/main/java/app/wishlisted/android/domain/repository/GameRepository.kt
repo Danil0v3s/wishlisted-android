@@ -7,5 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface GameRepository {
     fun fetchGameDeals(): Flow<PagingData<Game>>
+    fun fetchGameDetails(productId: String): Flow<Game>
+
     suspend fun fetchStatus(): Result<Unit>
 }
