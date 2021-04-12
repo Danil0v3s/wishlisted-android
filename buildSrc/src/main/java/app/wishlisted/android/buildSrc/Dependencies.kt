@@ -46,9 +46,10 @@ object Libs {
     }
 
     object Android {
+        const val material = "com.google.android.material:material:1.2.1"
         const val annotation = "androidx.annotation:annotation:1.2.0"
         const val appCompat = "androidx.appcompat:appcompat:1.2.0"
-        const val activity = "androidx.activity:activity:1.2.2"
+        const val activity = "androidx.activity:activity-ktx:1.2.2"
         const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.0.4"
         const val fragment = "androidx.fragment:fragment-ktx:1.3.2"
         const val navigationFragment = "androidx.navigation:navigation-fragment-ktx:2.3.5"
@@ -56,6 +57,7 @@ object Libs {
         const val palette = "androidx.palette:palette:1.0.0"
         const val coreKtx = "androidx.core:core-ktx:1.5.0-beta03"
         const val gradle = "com.android.tools.build:gradle:7.0.0-alpha11"
+        const val transition = "androidx.transition:transition-ktx:1.4.0"
     }
 
     object Lifecycle {

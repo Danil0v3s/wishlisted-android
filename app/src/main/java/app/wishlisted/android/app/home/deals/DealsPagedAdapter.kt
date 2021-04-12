@@ -1,6 +1,8 @@
 package app.wishlisted.android.app.home.deals
 
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.view.ViewCompat
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +14,7 @@ import app.wishlisted.android.domain.model.getImage
 import coil.load
 
 class DealsPagedAdapter constructor(
-    private val onGameClicked: (Game) -> Unit
+    private val onGameClicked: (Game, ImageView) -> Unit
 ) :
     PagingDataAdapter<Game, DealsPagedAdapter.GameBasicViewHolder>(GAME_COMPARATOR) {
 
@@ -31,20 +33,25 @@ class DealsPagedAdapter constructor(
 
     class GameBasicViewHolder(
         private val binding: GameBasicDetailsItemBinding,
-        private val onGameClicked: (Game) -> Unit
+        private val onGameClicked: (Game, ImageView) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         private var game: Game? = null
 
         init {
             binding.root.setOnClickListener {
-                game?.also(onGameClicked)
+                game?.also {
+                    onGameClicked(it, binding.imgCover)
+                }
             }
         }
 
         fun bind(game: Game) {
             this.game = game
+
             with(binding) {
+                imgCover.transitionName = "${game.productId}_transition"
+
                 imgCover.load(game.getImage(GameImagePurpose.Poster))
                 txtTitle.text = game.productTitle
             }

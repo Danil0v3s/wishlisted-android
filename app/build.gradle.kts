@@ -77,9 +77,11 @@ dependencies {
     implementation(Libs.Kotlin.stdLib)
 
     implementation(Libs.Android.coreKtx)
+    implementation(Libs.Android.material)
     implementation(Libs.Android.palette)
     implementation(Libs.Android.activity)
     implementation(Libs.Android.fragment)
+    implementation(Libs.Android.transition)
     implementation(Libs.Android.appCompat)
     implementation(Libs.Android.constraintLayout)
     implementation(Libs.Android.navigationFragment)
