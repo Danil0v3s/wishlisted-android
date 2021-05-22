@@ -16,7 +16,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 @InstallIn(SingletonComponent::class)
 object ApiModule {
 
-    private const val endpoint = "http://104.197.167.237:8080/api/"
+    private const val endpoint = "http://10.0.2.2:8080/api/"
 
     @Provides
     fun providesLoggingInterceptor(): HttpLoggingInterceptor {

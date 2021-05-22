@@ -1,5 +1,6 @@
 package app.wishlisted.android.app.pdp
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,7 +25,7 @@ import app.wishlisted.android.domain.model.Game
 import app.wishlisted.android.domain.model.GameImagePurpose
 import app.wishlisted.android.domain.model.discountAmount
 import app.wishlisted.android.domain.model.getImage
-import com.google.accompanist.coil.CoilImage
+import com.google.accompanist.coil.rememberCoilPainter
 import com.google.accompanist.flowlayout.FlowRow
 
 @Composable
@@ -42,16 +43,16 @@ fun HeroSection(game: Game) {
     val offset = (posterWidth / AspectRatio.ThreeByFour / 2).dp
 
     Box(Modifier.padding(bottom = offset)) {
-        CoilImage(
-            data = game.getImage(GameImagePurpose.SuperHeroArt).orEmpty(),
+        Image(
+            painter = rememberCoilPainter(game.getImage(GameImagePurpose.SuperHeroArt).orEmpty()),
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(AspectRatio.SixteenByNine)
         )
 
-        CoilImage(
-            data = game.getImage(GameImagePurpose.Poster).orEmpty(),
+        Image(
+            painter = rememberCoilPainter(game.getImage(GameImagePurpose.Poster).orEmpty()),
             contentDescription = null,
             modifier = Modifier
                 .align(Alignment.BottomCenter)

@@ -3,7 +3,7 @@ package app.wishlisted.android.buildSrc
 object Versions {
     const val kotlin = "1.4.32"
     const val ktlint = "0.40.0"
-    const val accompanist = "0.7.0"
+    const val accompanist = "0.10.0"
     const val coroutines = "1.4.2"
     const val junit = "4.13"
     const val compose = "1.0.0-beta07"
