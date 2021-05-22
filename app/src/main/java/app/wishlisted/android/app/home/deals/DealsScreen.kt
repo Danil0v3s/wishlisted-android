@@ -4,7 +4,10 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyGridScope
+import androidx.compose.foundation.lazy.LazyItemScope
+import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -12,10 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltNavGraphViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
 import app.wishlisted.android.domain.model.Game
 import app.wishlisted.android.domain.model.GameImagePurpose
 import app.wishlisted.android.domain.model.getImage
@@ -26,7 +28,7 @@ import com.google.accompanist.coil.rememberCoilPainter
 fun DealsScreen(
 	onItemClick: (Game) -> Unit
 ) {
-	val dealsViewModel: DealsViewModel = hiltNavGraphViewModel()
+	val dealsViewModel: DealsViewModel = hiltViewModel()
 	val deals = dealsViewModel.deals.collectAsLazyPagingItems()
 	val nColumns = 3
 
@@ -36,7 +38,7 @@ fun DealsScreen(
 	) {
 		items(deals) { game ->
 			game?.let {
-				DealsContent(game,onItemClick)
+				DealsContent(game, onItemClick)
 			}
 		}
 	}
