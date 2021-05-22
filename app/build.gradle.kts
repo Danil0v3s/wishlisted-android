@@ -83,10 +83,13 @@ dependencies {
     implementation(Libs.Lifecycle.viewModel)
 
     implementation(Libs.Compose.activity)
+    implementation(Libs.Compose.animation)
+    implementation(Libs.Compose.animationCore)
     implementation(Libs.Compose.constraint)
     implementation(Libs.Compose.foundation)
     implementation(Libs.Compose.layout)
     implementation(Libs.Compose.material)
+    implementation(Libs.Compose.materialIconsCore)
     implementation(Libs.Compose.materialIconsExtended)
     implementation(Libs.Compose.runtime)
     implementation(Libs.Compose.tooling)

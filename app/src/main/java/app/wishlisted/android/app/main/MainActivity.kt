@@ -11,8 +11,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigate
-import androidx.navigation.compose.popUpTo
 import androidx.navigation.compose.rememberNavController
 import app.wishlisted.android.app.home.deals.DealsScreen
 import app.wishlisted.android.app.launcher.LauncherScreen
