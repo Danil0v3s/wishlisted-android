@@ -4,7 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -13,6 +13,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltNavGraphViewModel
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import app.wishlisted.android.domain.model.Game
@@ -29,16 +30,25 @@ fun DealsScreen(
 	val deals = dealsViewModel.deals.collectAsLazyPagingItems()
 	val nColumns = 3
 
-	LazyColumn(
+	LazyVerticalGrid(
+		cells = GridCells.Fixed(nColumns),
 		modifier = Modifier.fillMaxSize()
 	) {
 		items(deals) { game ->
 			game?.let {
-				DealsContent(game) {
-
-				}
+				DealsContent(game,onItemClick)
 			}
 		}
+	}
+}
+
+@ExperimentalFoundationApi
+public fun <T : Any> LazyGridScope.items(
+	lazyPagingItems: LazyPagingItems<T>,
+	itemContent: @Composable LazyItemScope.(value: T?) -> Unit
+) {
+	items(lazyPagingItems.itemCount) { index ->
+		itemContent(lazyPagingItems.getAsState(index).value)
 	}
 }
 
