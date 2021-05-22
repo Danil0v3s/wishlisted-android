@@ -12,6 +12,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import app.wishlisted.android.app.home.HomeScreen
 import app.wishlisted.android.app.home.deals.DealsScreen
 import app.wishlisted.android.app.launcher.LauncherScreen
 import app.wishlisted.android.app.pdp.PdpScreen
@@ -56,12 +57,7 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(NavigationScreens.Home.route) {
-                            DealsScreen(
-                                onItemClick = { game ->
-                                    navController.putArgument(NavigationScreens.Pdp.Args.game, game)
-                                    navController.navigate(NavigationScreens.Pdp.route)
-                                }
-                            )
+                           HomeScreen()
                         }
 
                         composable(NavigationScreens.Pdp.route) {
