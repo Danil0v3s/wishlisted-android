@@ -15,19 +15,22 @@ import app.wishlisted.android.data.src.model.toDomainModel
 import app.wishlisted.android.domain.common.Result
 import app.wishlisted.android.domain.model.Game
 import app.wishlisted.android.domain.repository.GameRepository
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import javax.inject.Inject
 
 class GameRepositoryImpl @Inject constructor(
-    private val gameApi: GameApi,
-    private val gameDao: GameDao,
-    private val statusDao: StatusDao,
-    private val remoteKeyDao: GameStatusRemoteKeyDao,
-    private val appDatabase: AppDatabase
+	private val gameApi: GameApi,
+	private val gameDao: GameDao,
+	private val statusDao: StatusDao,
+	private val remoteKeyDao: GameStatusRemoteKeyDao,
+	private val appDatabase: AppDatabase
 ) : GameRepository {
 
-    @OptIn(ExperimentalPagingApi::class)
+    @ExperimentalCoroutinesApi
+	@OptIn(ExperimentalPagingApi::class)
     override fun fetchGameDeals(): Flow<PagingData<Game>> {
         var statusId = 0
         val mediator = PageKeyedRemoteMediator(
@@ -50,16 +53,21 @@ class GameRepositoryImpl @Inject constructor(
         }.flow.mapLatest { pagingData -> pagingData.map { it.toDomainModel() } }
     }
 
-    override suspend fun fetchStatus(): Result<Unit> {
-        return try {
-            val status = gameApi.fetchStatuses().mapIndexed { index, s ->
-                StatusDTO(statusId = index, name = s)
-            }
+	override suspend fun fetchStatus(): Result<Unit> {
+		return try {
+			val res = try {
+				gameApi.fetchStatuses()
+			} catch (ex: Exception) {
+				emptyList()
+			}
+			val status = res.mapIndexed { index, s ->
+				StatusDTO(statusId = index, name = s)
+			}
 
-            statusDao.insertAll(status)
-            Result.Success(Unit)
-        } catch (e: Exception) {
-            Result.Failure(e)
-        }
-    }
+			statusDao.insertAll(status)
+			Result.Success(Unit)
+		} catch (e: Exception) {
+			Result.Failure(e)
+		}
+	}
 }

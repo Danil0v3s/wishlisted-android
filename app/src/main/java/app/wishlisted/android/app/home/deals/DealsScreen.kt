@@ -4,20 +4,16 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyGridScope
-import androidx.compose.foundation.lazy.LazyItemScope
-import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
 import app.wishlisted.android.domain.model.Game
 import app.wishlisted.android.domain.model.GameImagePurpose
 import app.wishlisted.android.domain.model.getImage
@@ -26,15 +22,19 @@ import com.google.accompanist.coil.rememberCoilPainter
 @ExperimentalFoundationApi
 @Composable
 fun DealsScreen(
-	onItemClick: (Game) -> Unit
+	modifier: Modifier = Modifier,
+	contentPadding: PaddingValues = PaddingValues(0.dp),
+	deals: LazyPagingItems<Game>,
+	onItemClick: (Game) -> Unit,
 ) {
-	val dealsViewModel: DealsViewModel = hiltViewModel()
-	val deals = dealsViewModel.deals.collectAsLazyPagingItems()
 	val nColumns = 3
 
 	LazyVerticalGrid(
 		cells = GridCells.Fixed(nColumns),
-		modifier = Modifier.fillMaxSize()
+		modifier = Modifier
+			.fillMaxSize()
+			.composed { modifier },
+		contentPadding = contentPadding,
 	) {
 		items(deals) { game ->
 			game?.let {
