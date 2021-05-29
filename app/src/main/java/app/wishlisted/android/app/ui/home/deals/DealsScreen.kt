@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyGridScope
-import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -23,8 +21,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.PagingData
-import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import app.wishlisted.android.app.common.extensions.items
 import app.wishlisted.android.domain.model.Game
 import app.wishlisted.android.domain.model.GameImagePurpose
 import app.wishlisted.android.domain.model.getImage
@@ -54,16 +52,6 @@ fun DealsScreen(
                 DealsContent(game, onItemClick)
             }
         }
-    }
-}
-
-@ExperimentalFoundationApi
-public fun <T : Any> LazyGridScope.items(
-    lazyPagingItems: LazyPagingItems<T>,
-    itemContent: @Composable LazyItemScope.(value: T?) -> Unit
-) {
-    items(lazyPagingItems.itemCount) { index ->
-        itemContent(lazyPagingItems.getAsState(index).value)
     }
 }
 
