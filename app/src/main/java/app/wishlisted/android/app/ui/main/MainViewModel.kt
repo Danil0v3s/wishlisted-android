@@ -1,4 +1,4 @@
-package app.wishlisted.android.app.main
+package app.wishlisted.android.app.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

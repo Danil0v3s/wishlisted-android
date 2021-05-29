@@ -1,4 +1,4 @@
-package app.wishlisted.android.app.pdp
+package app.wishlisted.android.app.ui.pdp
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

@@ -1,4 +1,4 @@
-package app.wishlisted.android.app.views.player
+package app.wishlisted.android.app.ui.views.player
 
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth

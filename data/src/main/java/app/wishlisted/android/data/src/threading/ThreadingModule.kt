@@ -8,6 +8,6 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 @Module
 abstract class ThreadingModule {
-	@Binds
-	abstract fun bindDispatcherProvider(impl: ApplicationDispatcherProvider): DispatcherProvider
+    @Binds
+    abstract fun bindDispatcherProvider(impl: ApplicationDispatcherProvider): DispatcherProvider
 }
