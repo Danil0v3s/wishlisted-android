@@ -2,17 +2,17 @@ package app.wishlisted.android.data.src.repository.game
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import app.wishlisted.android.data.src.api.game.GameApi
+import app.wishlisted.android.data.src.api.GameApi
 import app.wishlisted.android.data.src.model.toDomainModel
 import app.wishlisted.android.domain.model.Game
 import retrofit2.HttpException
 import java.io.IOException
 
 class GamesDataSource(
-    private val api: GameApi,
-    private val fetchIds: suspend (skipItems: Int) -> GameApi.GamesIdsResponse,
-    private val language: String,
-    private val market: String
+	private val api: GameApi,
+	private val fetchIds: suspend (skipItems: Int) -> GameApi.GamesIdsResponse,
+	private val language: String,
+	private val market: String
 ) : PagingSource<Int, Game>() {
     override fun getRefreshKey(state: PagingState<Int, Game>) = 0
 

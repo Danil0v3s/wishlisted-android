@@ -5,7 +5,7 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import app.wishlisted.android.data.src.api.game.GameApi
+import app.wishlisted.android.data.src.api.GameApi
 import app.wishlisted.android.data.src.db.AppDatabase
 import app.wishlisted.android.data.src.db.dao.GameDao
 import app.wishlisted.android.data.src.db.dao.GameStatusRemoteKeyDao
@@ -17,12 +17,12 @@ import java.io.IOException
 
 @OptIn(ExperimentalPagingApi::class)
 class PageKeyedRemoteMediator(
-    private val database: AppDatabase,
-    private val api: GameApi,
-    private val dao: GameDao,
-    private val remoteKeyDao: GameStatusRemoteKeyDao,
-    private val fetchIds: suspend (skipItems: Int) -> GameApi.GamesIdsResponse,
-    private val fetchStatusId: suspend () -> Int,
+	private val database: AppDatabase,
+	private val api: GameApi,
+	private val dao: GameDao,
+	private val remoteKeyDao: GameStatusRemoteKeyDao,
+	private val fetchIds: suspend (skipItems: Int) -> GameApi.GamesIdsResponse,
+	private val fetchStatusId: suspend () -> Int,
 ) : RemoteMediator<Int, GameDTO>() {
 
     override suspend fun initialize() = InitializeAction.LAUNCH_INITIAL_REFRESH

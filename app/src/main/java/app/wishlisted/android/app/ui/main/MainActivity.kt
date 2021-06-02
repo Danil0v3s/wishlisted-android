@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -13,7 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import app.wishlisted.android.app.ui.home.HomeScreen
-import app.wishlisted.android.app.ui.home.deals.DealsViewModel
+import app.wishlisted.android.app.ui.home.DealsViewModel
 import app.wishlisted.android.app.ui.launcher.LauncherScreen
 import app.wishlisted.android.app.ui.pdp.PdpScreen
 import app.wishlisted.android.domain.model.Game
@@ -27,6 +28,7 @@ class MainActivity : ComponentActivity() {
 
     private val viewModel by viewModels<MainViewModel>()
 
+    @OptIn(ExperimentalMaterialApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

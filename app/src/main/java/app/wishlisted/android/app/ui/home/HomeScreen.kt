@@ -13,16 +13,20 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.ScaffoldState
@@ -36,6 +40,7 @@ import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -43,15 +48,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
-import app.wishlisted.android.app.ui.home.deals.DealsScreen
-import app.wishlisted.android.app.ui.home.deals.DealsViewModel
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
 import app.wishlisted.android.domain.model.Game
+import app.wishlisted.android.domain.model.GameCollection
 import app.wishlisted.android.domain.model.GameImagePurpose
 import app.wishlisted.android.domain.model.getImage
 import com.google.accompanist.coil.rememberCoilPainter
-import kotlinx.coroutines.launch
 
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
@@ -62,9 +69,12 @@ fun HomeScreen(
 	scaffoldState: ScaffoldState = rememberScaffoldState(),
 	onItemClick: (Game) -> Unit
 ) {
+	val collections = viewModel.homeCollections.collectAsState(initial = emptyList())
+	val games = viewModel.deals.collectAsLazyPagingItems()
 	val selectedGame = remember { mutableStateOf<Game?>(null) }
 	val state = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
 	val scope = rememberCoroutineScope()
+	val typography = MaterialTheme.typography
 
 	ModalBottomSheetLayout(
 		sheetState = state,
@@ -78,17 +88,72 @@ fun HomeScreen(
 			modifier = Modifier.fillMaxSize()
 		) {
 			SearchField()
-			DealsScreen(
-				deals = viewModel.deals,
-				contentPadding = PaddingValues(top = 84.dp),
-				onItemClick = {
-					selectedGame.value = it
-					scope.launch { state.show() }
+
+			LazyColumn(contentPadding = PaddingValues(top = 84.dp)) {
+
+				items(collections.value) { collection ->
+					Column(modifier = Modifier.padding(bottom = 16.dp)) {
+						Text(
+							modifier = Modifier.padding(start = 16.dp),
+							text = collection.name,
+							style = typography.h6,
+							maxLines = 1,
+							overflow = TextOverflow.Ellipsis
+						)
+
+						Spacer(Modifier.height(4.dp))
+
+						LazyRow(contentPadding = PaddingValues(start = 16.dp)) {
+							items(games) { game ->
+								when(collection.template) {
+									GameCollection.CollectionTemplate.Highlight -> {
+										Surface(
+											elevation = 12.dp,
+											modifier = Modifier
+												.height(90.dp)
+												.padding(end = 8.dp)
+												.zIndex(1f)
+										) {
+											Image(
+												painter = rememberCoilPainter(
+													game?.getImage(
+														GameImagePurpose.TitledHeroArt
+													) ?: game?.getImage(GameImagePurpose.SuperHeroArt).orEmpty()
+												),
+												contentDescription = null,
+												modifier = Modifier.fillMaxHeight()
+											)
+										}
+									}
+									GameCollection.CollectionTemplate.Normal -> {
+										Surface(
+											elevation = 12.dp,
+											modifier = Modifier
+												.width(90.dp)
+												.padding(end = 8.dp)
+												.zIndex(1f)
+										) {
+											Image(
+												painter = rememberCoilPainter(
+													game?.getImage(
+														GameImagePurpose.Poster
+													).orEmpty()
+												),
+												contentDescription = null,
+												modifier = Modifier.fillMaxWidth()
+											)
+										}
+									}
+								}
+							}
+						}
+					}
 				}
-			)
+			}
 		}
 	}
 }
+
 
 @Composable
 private fun GameBottomSheet(
@@ -190,7 +255,10 @@ private fun RecentSearches(
 }
 
 @Composable
-private fun RoundedCornerSurface(modifier: Modifier = Modifier, children: @Composable () -> Unit) {
+private fun RoundedCornerSurface(
+	modifier: Modifier = Modifier,
+	children: @Composable () -> Unit
+) {
 	val shape = remember { RoundedCornerShape(12.dp) }
 	Surface(
 		shape = shape,

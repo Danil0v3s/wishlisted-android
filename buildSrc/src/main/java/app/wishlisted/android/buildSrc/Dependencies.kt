@@ -6,7 +6,7 @@ object Versions {
     const val accompanist = "0.10.0"
     const val coroutines = "1.4.2"
     const val junit = "4.13"
-    const val compose = "1.0.0-beta07"
+    const val compose = "1.0.0-beta08"
     const val room = "2.3.0"
     const val androidTest = "1.2.0"
     const val hilt = "2.35.1"
