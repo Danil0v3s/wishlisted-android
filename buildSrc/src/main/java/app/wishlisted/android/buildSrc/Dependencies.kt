@@ -1,7 +1,7 @@
 package app.wishlisted.android.buildSrc
 
 object Versions {
-    const val kotlin = "1.4.32"
+    const val kotlin = "1.5.10"
     const val ktlint = "0.41.0"
     const val accompanist = "0.10.0"
     const val coroutines = "1.4.2"
@@ -13,7 +13,7 @@ object Versions {
     const val paging = "3.0.0-beta03"
     const val okhttp = "4.9.1"
     const val retrofit = "2.9.0"
-    const val moshi = "1.11.0"
+    const val moshi = "1.12.0"
 }
 
 object Libs {
